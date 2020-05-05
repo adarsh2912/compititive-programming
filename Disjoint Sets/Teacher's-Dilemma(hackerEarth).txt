@@ -1,0 +1,53 @@
+/* IMPORTANT: Multiple classes and nested static classes are supported */
+
+
+ //uncomment this if you want to read input.
+//imports for BufferedReader
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+//import for Scanner and other utility classes
+import java.util.*;
+import java.util.Scanner;
+import java.math.BigInteger;
+
+
+// Warning: Printing unwanted or ill-formatted data to output will cause the test cases to fail
+
+class TestClass {
+
+    public static int find(int arr[], int n){
+        if(arr[n] < 0)
+        return n;
+        else 
+        return find(arr, arr[n]);
+    }
+    public static void main(String args[] ) throws Exception {
+                
+       Scanner sc=new Scanner(System.in);
+        
+        int n,m;
+        
+        n = sc.nextInt();
+        m = sc.nextInt();
+        int parent[] = new int[n+1];
+        Arrays.fill(parent, -1);
+        while(m-- > 0){
+            int u = sc.nextInt();
+            int v = sc.nextInt();
+              u = find(parent, u);
+              v = find(parent, v);
+              if(v != u){
+                parent[u] = parent[u] + parent[v];
+                parent[v] = u;}
+        }
+        BigInteger f = new BigInteger("1");
+        BigInteger f1 = new BigInteger("1000000007");
+        for(int i=1; i<=n; i++)
+         {if(parent[i] < 0)
+          f = f.multiply(BigInteger.valueOf((int)Math.abs(parent[i])));}
+
+          System.out.println(f.mod(f1));
+
+    }
+}
