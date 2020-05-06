@@ -1,0 +1,54 @@
+/* IMPORTANT: Multiple classes and nested static classes are supported */
+
+/*
+ * uncomment this if you want to read input.
+//imports for BufferedReader
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+//import for Scanner and other utility classes
+
+*/
+import java.io.*;
+import java.util.*;
+// Warning: Printing unwanted or ill-formatted data to output will cause the test cases to fail
+ class TestClass {
+
+    static int parent[]  = new int[100001];
+
+    public static int find(int n){
+        if(parent[n] < 0)
+        return n;
+        else
+        return parent[n] = find(parent[n]);
+    }
+    public static void main(String args[] ) throws Exception {
+      Scanner sc = new Scanner(System.in);
+      int n = sc.nextInt();
+      int m = sc.nextInt();
+      for(int i=1; i<=n; i++)
+      parent[i] = -i;
+    while(m-- > 0){
+        int u = sc.nextInt();
+        int v = sc.nextInt();
+        u = find(u);
+        v = find(v);
+        if(u != v){
+        parent[u] = Math.min(parent[u], parent[v]);
+        parent[v] = u;}
+    }
+    int q = sc.nextInt();
+    while(q-- > 0){
+        int u = sc.nextInt();
+        int v = sc.nextInt();
+        int x = find(u);
+        int y = find(v);
+        if(parent[x] == parent[y])
+        System.out.println("TIE");
+        else if(parent[x] < parent[y])
+        System.out.println(u);
+        else
+        System.out.println(v);
+    }
+    }
+}
