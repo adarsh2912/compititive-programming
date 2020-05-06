@@ -1,0 +1,59 @@
+/*package whatever //do not write package name here */
+
+import java.io.*;
+import java.util.*;
+
+class Graph {
+    private int v;
+    private LinkedList<Integer> adj[];
+    
+    public Graph(int v){
+        this.v = v;
+        adj = new LinkedList[v];
+        for(int i = 0; i < v; i++)
+         adj[i] = new LinkedList<Integer>();
+    }
+    
+    public void addEdge(int u, int v){
+        adj[u].add(v);
+        adj[v].add(u);
+    }
+    
+    void DFSUtil(int v, int flag[]){
+        flag[v] = 1;
+        Integer n;
+        
+        Iterator<Integer> i = adj[v].listIterator();
+        while(i.hasNext()){
+             n = i.next();
+            if(flag[n] == -1)
+            DFSUtil(n, flag);
+        }
+    }
+    
+    public int countConnect(int flag[]){
+        int count = 0;
+        for(int i = 0; i < flag.length; i++){
+            if(flag[i] == -1){
+            DFSUtil(i, flag);
+            count++;}
+        }
+        return count;
+    }
+    
+	public static void main (String[] args) {
+	  Graph g = new Graph(7);
+
+      g.addEdge(0, 1);
+	  g.addEdge(1, 2);
+	  g.addEdge(0, 3);
+	  g.addEdge(3, 2);
+	  g.addEdge(5, 4);
+	  g.addEdge(5, 2);
+	  int flag[] = new int[7];
+	  Arrays.fill(flag, -1);
+	  
+	  System.out.println(g.countConnect(flag));
+	  
+	}
+}
